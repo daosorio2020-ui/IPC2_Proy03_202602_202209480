@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SatAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7c4b1cfcdd2da2f1269ba2e2c1b56a95edc65ea9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7cf8264f83cd984b39f0e62d483a3f8f3734a247")]
 [assembly: System.Reflection.AssemblyProductAttribute("SatAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SatAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

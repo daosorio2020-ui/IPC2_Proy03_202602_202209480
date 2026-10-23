@@ -82,4 +82,14 @@ public class AutorizacionResponse
     public ResultadoAutorizaciones? Resultado { get; set; }
 }
 
+public class FacturaHistorial
+{
+    public string? Fecha { get; set; }
+    public string? NitEmisor { get; set; }
+    public string? NitReceptor { get; set; }
+    public decimal Valor { get; set; }
+    public decimal Iva { get; set; }
+    public decimal Total { get; set; }
+}
+
 

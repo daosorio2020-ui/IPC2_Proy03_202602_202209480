@@ -1,10 +1,30 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Enviar Mensajes";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h2 class="display-4">Simulador SAT - Envío de Mensajes</h2>
+   
+    <div class="card mt-5 p-4 mx-auto" style="max-width: 500px;">
+        <form method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="archivoJson" class="form-label">Selecciona un archivo JSON</label>
+                <input type="file" class="form-control" name="archivoJson" accept=".json" required />
+            </div>
+           
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary" asp-page-handler="CargarRtu">Actualizar RTU</button>
+                <button type="submit" class="btn btn-success" asp-page-handler="CargarFacturas">Solicitar Autorizaciones</button>
+            </div>
+        </form>
+       
+        @if (Model.MensajeResultado != null)
+        {
+            <div class="alert alert-info mt-3">
+                @Model.MensajeResultado
+            </div>
+        }
+    </div>
 </div>

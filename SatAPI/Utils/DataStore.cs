@@ -1,3 +1,4 @@
+using SatAPI.Models;
 namespace SatAPI.Utils;
 
 public static class DataStore
@@ -11,4 +12,16 @@ public static class DataStore
    
     // Conteo diario de aprobaciones. Llave: Fecha (yyyyMMdd), Valor: correlativo actual
     public static Dictionary<string, int> CorrelativosDiarios = new Dictionary<string, int>();
+
+    public static List<FacturaHistorial> HistorialFacturas = new List<FacturaHistorial>();
+
+    // Método para devolver el sistema a su estado inicial[span_3](start_span)[span_3](end_span)
+    public static void Resetear()
+    {
+        Rtu.Clear();
+        ReferenciasProcesadas.Clear();
+        CorrelativosDiarios.Clear();
+        HistorialFacturas.Clear();
+    }
+
 }

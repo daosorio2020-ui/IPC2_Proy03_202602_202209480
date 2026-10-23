@@ -79,6 +79,14 @@ public IActionResult ProcesarAutorizaciones([FromBody] List<AutorizacionRequest>
        
         // 1. Guardar la referencia para que no se vuelva a usar
         DataStore.ReferenciasProcesadas.Add(factura.Referencia!);
+        DataStore.HistorialFacturas.Add(new FacturaHistorial
+        {
+        Fecha = fechaLimpia,
+        NitEmisor = factura.NitEmisor,
+        NitReceptor = factura.NitReceptor,
+        Valor = factura.Valor,
+        Iva = factura.Iva,
+        Total = factura.Total});
 
         // 2. Generar el correlativo diario[span_2](start_span)[span_2](end_span)
         // Convertimos dd/MM/yyyy a yyyyMMdd para la llave del diccionario
@@ -109,6 +117,12 @@ public IActionResult ProcesarAutorizaciones([FromBody] List<AutorizacionRequest>
     return Ok(new AutorizacionResponse { Resultado = resultado });
 }
 
+    [HttpPost("resetear")]
+    public IActionResult ResetearDatos()
+    {
+        DataStore.Resetear();
+        return Ok(new { mensaje = "Sistema reiniciado correctamente." });
+    }
 
 }
 

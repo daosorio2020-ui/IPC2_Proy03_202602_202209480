@@ -1,4 +1,9 @@
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddHttpClient("SatApi", client =>
+{
+    // Asegúrate de cambiar el puerto por el que esté usando tu SatAPI al ejecutarse (usualmente 5000, 5035, o similar)
+    client.BaseAddress = new Uri("http://localhost:5000");
+});
 builder.Services.AddControllers();
 
 
