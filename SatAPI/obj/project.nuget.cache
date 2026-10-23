@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "W5NP+b23M1A=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Daniel Osorio\\Desktop\\IPC2\\IPC2_Proy03_202602_202209480\\SatAPI\\SatAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Daniel Osorio\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.12\\microsoft.aspnetcore.openapi.10.0.12.nupkg.sha512",
+    "C:\\Users\\Daniel Osorio\\.nuget\\packages\\microsoft.openapi\\2.12.0\\microsoft.openapi.2.12.0.nupkg.sha512"
+  ],
+  "logs": []
+}

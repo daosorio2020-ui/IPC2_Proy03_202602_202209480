@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SatAPI/SatAPI.csproj" />
+  <Project Path="SatFrontend/SatFrontend.csproj" />
+</Solution>
