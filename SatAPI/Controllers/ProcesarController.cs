@@ -1,5 +1,7 @@
-using SatAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using SatAPI.Models;
+using SatAPI.Utils;
+
 namespace SatAPI.Controllers;
 
 [ApiController]
@@ -9,8 +11,31 @@ public class ProcesarController : ControllerBase
     [HttpPost("rtu")]
     public IActionResult ActualizarRtu([FromBody] List<RtuRequest> solicitudes)
     {
-        // Lógica de validación del módulo 11 e inserción en el Dictionary de contribuyentes
-        return Ok(new RtuResponse());
+        var respuesta = new RtuResponse();
+
+        foreach (var solicitud in solicitudes)
+        {
+            // Validar que el NIT no venga nulo y cumpla el algoritmo del Módulo 11
+            if (solicitud.Nit == null || !ValidadorNit.EsValido(solicitud.Nit))
+            {
+                respuesta.NitsInvalidos++;
+                continue;
+            }
+
+            // Si es válido, verificamos su existencia en el RTU
+            if (DataStore.Rtu.ContainsKey(solicitud.Nit))
+            {
+                DataStore.Rtu[solicitud.Nit] = solicitud.Nombre ?? "";
+                respuesta.ContribuyentesActualizados++;
+            }
+            else
+            {
+                DataStore.Rtu.Add(solicitud.Nit, solicitud.Nombre ?? "");
+                respuesta.ContribuyentesNuevos++;
+            }
+        }
+
+        return Ok(respuesta);
     }
 
     [HttpPost("autorizacion")]
@@ -20,3 +45,4 @@ public class ProcesarController : ControllerBase
         return Ok(new AutorizacionResponse());
     }
 }
+
