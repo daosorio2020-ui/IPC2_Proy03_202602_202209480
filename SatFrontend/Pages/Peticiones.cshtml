@@ -53,11 +53,105 @@
     </div>
 </div>
 
-<!-- Área de Resultados -->
-@if (Model.ResultadoJson != null)
+<!-- Área de Resultados y Gráfica -->
+@if (Model.ResultadoJson != null && Model.ResultadoJson != "Error o no se encontraron datos.")
 {
-    <h4>Resultado de la Consulta:</h4>
-    <div class="card bg-light p-3">
-        <pre><code>@Model.ResultadoJson</code></pre>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Resultado de la Consulta:</h4>
+        <!-- Botón para descargar el PDF -->
+        <button class="btn btn-danger" onclick="descargarPDF()">
+            <i class="bi bi-file-pdf"></i> Exportar a PDF
+        </button>
     </div>
+
+    <!-- Contenedor que será transformado a PDF -->
+    <div id="areaImprimir" class="p-3 bg-white">
+        <div class="row">
+            <!-- Columna de Datos JSON -->
+            <div class="col-md-4">
+                <div class="card bg-light p-3">
+                    <pre><code>@Model.ResultadoJson</code></pre>
+                </div>
+            </div>
+           
+            <!-- Columna de Gráfica -->
+            <div class="col-md-8">
+                <div class="card p-3">
+                    <canvas id="graficaResultados"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Librerías JS para Gráficas y PDF -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <script>
+        // Función para exportar a PDF ajustada
+        function descargarPDF() {
+            const elemento = document.getElementById('areaImprimir');
+            const opciones = {
+                margin:       0.3, // Márgenes más pequeños
+                filename:     'Reporte_Peticiones_SAT.pdf',
+                image:        { type: 'jpeg', quality: 1 },
+                // scale: 2 mejora la resolución, scrollY: 0 evita recortes si la página estaba scrolleada
+                html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
+                jsPDF:        { unit: 'in', format: 'legal', orientation: 'landscape' } // Formato legal da más espacio a lo ancho
+            };
+           
+            html2pdf().set(opciones).from(elemento).save();
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const rawData = @Html.Raw(Model.ResultadoJson);
+            const tabActiva = '@Model.PestañaActiva';
+           
+            if (tabActiva === 'iva' && Array.isArray(rawData)) {
+                const ctx = document.getElementById('graficaResultados').getContext('2d');
+               
+                const labelsNit = rawData.map(d => d.nit);
+                const ivaEmitido = rawData.map(d => d.ivaEmitido);
+                const ivaRecibido = rawData.map(d => d.ivaRecibido);
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labelsNit,
+                        datasets: [
+                            {
+                                label: 'IVA Emitido',
+                                data: ivaEmitido,
+                                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'IVA Recibido',
+                                data: ivaRecibido,
+                                backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        animation: false, // <-- DESACTIVA LA ANIMACIÓN PARA QUE EL PDF NO SALGA CORTADO
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Resumen de Movimientos de IVA por NIT'
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+}
+else if (Model.ResultadoJson != null)
+{
+    <div class="alert alert-warning mt-3">@Model.ResultadoJson</div>
 }

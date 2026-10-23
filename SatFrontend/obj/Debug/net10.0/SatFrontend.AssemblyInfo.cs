@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SatFrontend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7cf8264f83cd984b39f0e62d483a3f8f3734a247")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+34700343c8e0557c693d5c1889619a859e860730")]
 [assembly: System.Reflection.AssemblyProductAttribute("SatFrontend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SatFrontend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
